@@ -1,0 +1,86 @@
+<!DOCTYPE >
+<html>
+  <head>
+    <title>Basic</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="card">
+      <header>{{ title }}</header>
+      <div>
+        <input id="itemForm" @keypress.enter="addItem" />
+        <button @click="addItem">Add Dino</button>
+      </div>
+      <ul>
+        <li v-for="(item, index) in items">
+          <button @click="deleteItem(index)">X</button> {{ item.text }}
+        </li>
+      </ul>
+      <ul>
+        <li>
+          Total Dinos: {{totalDinos}}<span>Updated: {{dinosUpdated}}</span>
+        </li>
+        <li>
+          Total Species: {{totalSpecies}}<span>Updated:{{speciesUpdated}}</span>
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      var card = new Vue({
+        el: "#card",
+        data: {
+          title: "Dinosaurs",
+          input: "",
+          dinosUpdated: 0,
+          speciesUpdated: 0,
+          items: [
+            {
+              text: "Raptor",
+              quantity: 5
+            },
+            {
+              text: "Triceratops",
+              quantity: 3
+            },
+            {
+              text: "Trex",
+              quantity: 6
+            }
+          ]
+        },
+        methods: {
+          addItem: function() {
+            var input = document.getElementById("itemForm");
+
+            if (input.value !== "") {
+              this.items.push({
+                text: input.value
+              });
+              input.value = "";
+            }
+          },
+          deleteItem: function(index) {
+            this.items.splice(index, 1);
+          }
+        },
+        computed: {
+          totalDinos: function() {
+            this.dinosUpdated += 1;
+            var sum = 0;
+            var items = this.items;
+
+            for (var i in items) {
+              sum += items[i].quantity;
+            }
+            return sum;
+          },
+          totalSpecies: function() {
+            this.speciesUpdated += 1;
+            return this.items.length;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
