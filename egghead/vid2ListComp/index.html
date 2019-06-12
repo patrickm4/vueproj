@@ -1,0 +1,48 @@
+<!DOCTYPE >
+<html>
+  <head>
+    <title>ListComp</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="card">
+      <header>{{ title }}</header>
+      <div>
+        <input id="itemForm" @keypress.enter="addItem" />
+        <button @click="addItem">Add Dino</button>
+      </div>
+      <ul>
+        <li v-for="(item, index) in items">
+          <button @click="deleteItem(index)">X</button> {{ item.text }}
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      var card = new Vue({
+        el: "#card",
+        data: {
+          title: "Dinosaurs",
+          items: [{ text: "Raptor" }, { text: "Trex" }, { text: "Giraffe?" }]
+        },
+        methods: {
+          addItem: function() {
+            console.log("yeet1");
+            var input = document.getElementById("itemForm");
+
+            if (input.value !== "") {
+              this.items.push({
+                text: input.value
+              });
+              input.value = "";
+            }
+          },
+          deleteItem: function(index) {
+            console.log("yeet2");
+            this.items.splice(index, 1);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
