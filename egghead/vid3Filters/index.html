@@ -1,0 +1,62 @@
+<!DOCTYPE >
+<html>
+  <head>
+    <title>Fitlers</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="card">
+      <header>{{ title | capiutalize }}</header>
+      <ul>
+        <li v-for="dino in dinos">
+          <h4>{{ dino.text | capiutalize }}</h4>
+          <span>The {{dino.text | undercase}} weighs {{dino.weight}}</span>
+          <br />
+          <a v-bind:href="dino.text | undercase | url"
+            >{{dino.text | undercase | url}}</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      var card = new Vue({
+        el: "#card",
+        data: {
+          title: "Dinosaurs",
+          dinos: [
+            {
+              text: "Raptor",
+              weight: "15 kg"
+            },
+            {
+              text: "Triceratops",
+              weight: "6500 kg"
+            },
+            {
+              text: "Bear",
+              weight: "90 kg"
+            }
+          ]
+        },
+        filters: {
+          capitalize: function(value) {
+            if (!value) return "";
+            value = value.toString();
+            return value.charAt(0).toUpperCase() + value.slice(1);
+          },
+          undercase: function(value) {
+            if (!value) return "";
+            value = value.toString();
+            return value.toLowerCase();
+          },
+          url: function(value) {
+            if (!value) return "";
+            value = value.toString();
+            return "https://en.wikipedia.org/wiki/" + value;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
